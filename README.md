@@ -11,6 +11,8 @@ Run the `build.sh` script included with this repository create Docker images for
 
 - the latest recommended Minecraft Forge server (includes the Chunk Pregenerator mod)
 
+- the latest Shivaxi RLCraft server modpack (requires additional configuration)
+
 # Deployment
 
 Start a container using a command similar to the following:
