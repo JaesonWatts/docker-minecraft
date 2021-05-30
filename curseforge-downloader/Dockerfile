@@ -13,6 +13,7 @@ RUN set -eux; \
     apt-get install -y --no-install-recommends \
         ca-certificates \
         curl \
+        unzip \
     ; \
     rm -rf /var/lib/apt/lists/*
 
