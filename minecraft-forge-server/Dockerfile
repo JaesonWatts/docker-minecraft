@@ -1,7 +1,14 @@
-ARG CHUNK_PREGENERATOR_VERSION=1.16-3.0.5
 ARG MINECRAFT_VERSION=1.16.5
+ARG CHUNK_PREGENERATOR_VERSION=1.16-3.0.5
+ARG CHUNK_PREGENERATOR_URL=https://media.forgecdn.net/files/3237/965/Chunk+Pregenerator-V1.16-3.0.5.jar
 
-FROM chunk-pregenerator:${CHUNK_PREGENERATOR_VERSION} AS chunk-pregenerator-mod
+FROM curseforge-downloader:latest as chunk-pregenerator-mod
+
+ARG CHUNK_PREGENERATOR_URL
+ENV CHUNK_PREGENERATOR_URL ${CHUNK_PREGENERATOR_URL}
+
+RUN set -eux; \
+    curseforge-curl -O "${CHUNK_PREGENERATOR_URL}"
 
 FROM minecraft-server:${MINECRAFT_VERSION}
 
@@ -24,7 +31,6 @@ RUN set -eux; \
     rm forge-installer.jar forge-installer.jar.log minecraft_server*.jar; \
     mv forge-*.jar server.jar
 
-# Install the Chunk Pregenerator mod.
-COPY --chown=app:app --from=chunk-pregenerator-mod /curseforge/Chunk+Pregenerator-V${CHUNK_PREGENERATOR_VERSION}.jar /server/data/mods/
+COPY --chown=app:app --from=chunk-pregenerator-mod /curseforge/ /server/data/mods/
 
 WORKDIR /server/data
