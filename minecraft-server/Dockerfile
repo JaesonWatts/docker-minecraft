@@ -13,14 +13,14 @@ ARG MINECRAFT_SERVER_JAR
 ENV MINECRAFT_SERVER_JAR ${MINECRAFT_SERVER_JAR:-https://launcher.mojang.com/v1/objects/1b557e7b033b583cd9f66746b7a9ab1ec1673ced/server.jar}
 
 RUN set -eux; \
-    adduser --system --group app; \
+    useradd --system app; \
     mkdir -p /server/data/mods; \
     chown -R app:app /server
 WORKDIR /server
 USER app
 
 RUN set -eux; \
-    wget "${MINECRAFT_SERVER_JAR}" -O server.jar
+    curl -o server.jar "${MINECRAFT_SERVER_JAR}"
 COPY --chown=app:app ./start.sh /server/
 
 VOLUME /server/data

@@ -2,16 +2,16 @@
 
 set -Eeuxo pipefail
 
+pushd download-helper
+docker build --force-rm -t download-helper:latest .
+popd
+
 pushd minecraft-server
 docker build --force-rm -t minecraft-server:1.16.5 .
 docker build --force-rm -t minecraft-server:1.12.2 \
        --build-arg MINECRAFT_VERSION=1.12.2 \
        --build-arg MINECRAFT_SERVER_JAR=https://launcher.mojang.com/mc/game/1.12.2/server/886945bfb2b978778c3a0288fd7fab09d315b25f/server.jar \
        .
-popd
-
-pushd curseforge-downloader
-docker build --force-rm -t curseforge-downloader:latest .
 popd
 
 pushd minecraft-forge-server
