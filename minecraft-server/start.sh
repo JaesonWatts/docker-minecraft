@@ -4,7 +4,7 @@ set -eux
 
 # Check EULA
 if [ ! -e eula.txt ]; then
-    if [ "$EULA" != "" ]; then
+    if [ "${EULA:-false}" != "false" ]; then
         echo "# Generated via Docker on $(date)" > eula.txt
         echo "eula=$EULA" >> eula.txt
     else
