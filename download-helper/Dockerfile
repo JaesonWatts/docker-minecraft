@@ -6,9 +6,9 @@ ARG DEBIAN_VERSION
 ENV DEBIAN_VERSION ${DEBIAN_VERSION}
 LABEL debian_version=${DEBIAN_VERSION}
 
-COPY curseforge-curl /usr/local/bin
+COPY curl-wrapper /usr/local/bin
 RUN set -eux; \
-    chmod 755 /usr/local/bin/curseforge-curl; \
+    chmod 755 /usr/local/bin/curl-wrapper; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
         ca-certificates \
@@ -18,8 +18,8 @@ RUN set -eux; \
     rm -rf /var/lib/apt/lists/*
 
 RUN set -eux; \
-    adduser --system --group app; \
-    mkdir -p /curseforge; \
-    chown -R app:app /curseforge
-WORKDIR /curseforge
+    useradd --system app; \
+    mkdir -p /server; \
+    chown -R app:app /server
+WORKDIR /server
 USER app
